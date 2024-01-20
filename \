@@ -1,0 +1,58 @@
+package main
+
+import (
+	"fmt"
+	"log"
+	"os"
+	"strings"
+)
+
+type questions struct {
+	question string
+	answer   string
+}
+
+type guesses struct {
+	correct   int
+	incorrect int
+	skipped   int
+}
+
+var TotalQuestions []questions
+var TotalGuesses []guesses
+
+func importCSV() {
+	file, err := os.ReadFile("./problems.csv")
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	formatedString := strings.Split(string(file), "\n")
+	createQuiz(formatedString)
+}
+
+func createQuiz(questions []string) {
+	// fmt.Printf("%v", questions)
+
+	var quiz [][]string
+
+    for i := 0; i < len(questions); i++ {
+        // for j := 0; j < len(questions[i]); j++ {
+        // }
+
+        fmt.Print(questions[i])
+        fmt.Println()
+        quiz = append(quiz, strings.Split(string(questions[i]), ","))
+
+    }
+
+    fmt.Printf("%v", strings.Join(quiz, "\n"))
+
+
+}
+
+func main() {
+	fmt.Println("Reading CSV Data from ./problems.csv")
+	importCSV()
+}
